@@ -32,8 +32,16 @@ const ListItem = styled.li`
     margin-right: 1rem;
   }
 `
-
+// MY CSS STYLED-COMPONENTS
 const SearchBox = styled.div`
+  display: flex;
+  width:100%;
+  margin-top:1.2rem;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+`
+const Filters = styled.div`
   display: flex;
   width:100%;
   margin-top:1.2rem;
@@ -81,10 +89,13 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
             <Input></Input>
          
       </SearchBox>
-      <SearchBox>
-          <h3>Filters</h3>
-         
-      </SearchBox>
+      <Filters>
+          <h2>Filters</h2>
+          <h3>Types:</h3>
+          <input type="checkbox" name="chk_group_1" value="value1" />Value 1<br />
+          <input type="checkbox" name="chk_group_1" value="value2" />Value 2<br />
+          <input type="checkbox" name="chk_group_1" value="value3" />Value 3<br />     
+      </Filters>
       
       <Container rounded>
         
