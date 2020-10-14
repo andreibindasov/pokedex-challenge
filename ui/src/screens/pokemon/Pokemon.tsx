@@ -33,6 +33,20 @@ const ListItem = styled.li`
   }
 `
 
+const SearchBox = styled.div`
+  display: flex;
+  width:100%;
+  margin-top:1.2rem;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+`
+
+const Input = styled.input`
+  width:33%;
+  margin-top:.3rem;
+`
+
 const POKEMON_MANY = gql`
   query($skip: Int, $limit: Int) {
     pokemonMany(skip: $skip, limit: $limit) {
@@ -60,18 +74,32 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
   }
 
   return (
-    <Container rounded>
-      <List>
-        {pokemonList.map(pokemon => (
-          <Link to={pokemon.id} onMouseDown={clickLink as any}>
-            <ListItem>
-              <img src={pokemon.img} />
-              {pokemon.name} - {pokemon.num}
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-    </Container>
+    <div>
+      <SearchBox>
+          <h3>Search Box</h3>
+          
+            <Input></Input>
+         
+      </SearchBox>
+      <SearchBox>
+          <h3>Filters</h3>
+         
+      </SearchBox>
+      
+      <Container rounded>
+        
+        <List>
+          {pokemonList.map(pokemon => (
+            <Link to={pokemon.id} onMouseDown={clickLink as any}>
+              <ListItem>
+                <img src={pokemon.img} />
+                {pokemon.name} - {pokemon.num}
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      </Container>
+    </div>
   )
 }
 
