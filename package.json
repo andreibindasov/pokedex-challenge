@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "^12.8.0"
+    "node": "^13.9.0"
   }
 }

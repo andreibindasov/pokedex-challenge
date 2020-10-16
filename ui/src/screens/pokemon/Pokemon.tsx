@@ -4,7 +4,7 @@ import { RouteComponentProps, Link } from '@reach/router'
 import { useQuery, gql } from '@apollo/client'
 import { Container as NesContainer } from 'nes-react'
 
-import { useFuzzy } from 'react-use-fuzzy'
+import Fuse from 'fuse.js'
 
 const Container = styled(NesContainer)`
   && {
@@ -68,16 +68,19 @@ const POKEMON_MANY = gql`
   }
 `
 
+
+
 const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
   clickLink,
 }) => {
   
+
   const { loading, error, data } = useQuery(POKEMON_MANY)
   const pokemonList:
     | Array<{ id: string; name: string; img: string; num: string }>
     | undefined = data?.pokemonMany
 
-  const [searchState, setSearchState] = useState<{id: string; name: string; img: string; num: string}[]>([]);
+  const [text, setState] = useState('');
 
   if (loading) {
     return <p>Loading...</p>
@@ -86,14 +89,29 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
     return <p>Error!</p>
   }
 
+  // FUZZY_SEARCH 
+  const options = {
+    includeScore:true,
+    keys: ['name']
+  }
+
+  
+    const fuse = new Fuse(pokemonList, options)
+    const filteredPokemons = fuse.search(text).map(el => el.item)
+    const f1 = fuse.search(text)
+
+    f1.length > 0 ? console.log(f1.filter(el=>el.score<0.1)) : console.log('hhh')
+
+
+    const result = text ? filteredPokemons : pokemonList
+            
+ 
   // const filteredPokemons = pokemonList.filter(pokemon=>
-  //   // pokemon.name.toLowerCase().includes(searchState.toLowerCase())
-  //   fuzzysearch(searchState.toLowerCase(), pokemon.name.toLowerCase())
+  //   pokemon.name.toLowerCase().includes(text.toLowerCase())
+ 
   // );
 
-  const {result, keyword='', search} = useFuzzy<{id: string; name: string; img: string; num: string}>(searchState, {
-    keys: ['name'],
-  })
+  
 
   return (
     <div>
@@ -101,10 +119,10 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
           <h3>Search Box</h3>
           
       <Input 
-          value={keyword} 
+          value={text} 
           onChange={(e)=>{
-            // setSearchState(e.target.value)
-            search(e.target.value)
+            setState(e.target.value)
+            
           }}
       ></Input>
          
@@ -120,13 +138,16 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
       <Container rounded>
         
         <List>
-          {result.map(pokemon => (
+          {
+            
+            result.map(pokemon => (
               <Link to={pokemon.id} onMouseDown={clickLink as any}>
                 <ListItem>
                   <img src={pokemon.img} />
                   {pokemon.name} - {pokemon.num}
                 </ListItem>
               </Link>
+              
           ))}
         </List>
       </Container>

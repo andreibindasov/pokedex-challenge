@@ -5022,6 +5022,11 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+fuse.js@^6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.4.1.tgz#76f1b4ab9cd021b854a68381b35628033d27507e"
+  integrity sha512-+hAS7KYgLXontDh/vqffs7wIBw0ceb9Sx8ywZQhOsiQGcSO5zInGhttWOUYQYlvV/yYMJOacQ129Xs3mP3+oZQ==
+
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
@@ -6936,6 +6941,11 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
+
+magic-search@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/magic-search/-/magic-search-1.0.0.tgz#4efb011dbe2617bf408575b27f396cb7ede5c05c"
+  integrity sha1-TvsBHb4mF79AhXWyfzlst+3lwFw=
 
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
@@ -9182,11 +9192,6 @@ react-sound@^1.2.0:
   dependencies:
     prop-types "^15.5.7"
     soundmanager2 "^2.97.20170602"
-
-react-use-fuzzy@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/react-use-fuzzy/-/react-use-fuzzy-1.0.4.tgz#8697aec1ca6d858721d93dca334044787ce6fa0b"
-  integrity sha512-eAxNa67Av7h6WNnJ7Bnqn3qmMb/AdBDpPHGRatv8Dg1is4WpEjJA5Cah4nZncH7w5lHeAD77WduHDZRYdke2Lg==
 
 react@^16.13.1:
   version "16.13.1"
