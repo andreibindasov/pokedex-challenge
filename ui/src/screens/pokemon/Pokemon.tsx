@@ -98,9 +98,9 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
   
     const fuse = new Fuse(pokemonList, options)
     const filteredPokemons = fuse.search(text).map(el => el.item)
-    const f1 = fuse.search(text)
+    // const f1 = fuse.search(text)
 
-    f1.length > 0 ? console.log(f1.filter(el=>el.score<0.1)) : console.log('hhh')
+    // f1.length > 0 ? console.log(f1.filter(el=>el.score<0.1)) : console.log('hhh')
 
 
     const result = text ? filteredPokemons : pokemonList
@@ -129,10 +129,18 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
       </SearchBox>
       <Filters>
           <h2>Filters</h2>
-          <h3>Types:</h3>
-          <input type="checkbox" name="chk_group_1" value="value1" />Value 1<br />
-          <input type="checkbox" name="chk_group_1" value="value2" />Value 2<br />
-          <input type="checkbox" name="chk_group_1" value="value3" />Value 3<br />     
+          <div>
+            <h3>Types:</h3>
+            <input type="checkbox" name="chk_group_1" value="value1" />Value 1<br />
+            <input type="checkbox" name="chk_group_1" value="value2" />Value 2<br />
+            <input type="checkbox" name="chk_group_1" value="value3" />Value 3<br />     
+          </div>
+          <div>
+            <h3>Weaknesses:</h3>
+            <input type="checkbox" name="chk_group_2" value="value1" />Value 1<br />
+            <input type="checkbox" name="chk_group_2" value="value2" />Value 2<br />
+            <input type="checkbox" name="chk_group_2" value="value3" />Value 3<br />     
+          </div>
       </Filters>
       
       <Container rounded>
