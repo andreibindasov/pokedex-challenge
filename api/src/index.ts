@@ -19,6 +19,27 @@ interface Pokemon {
   candyCount?: number
 }
 
+
+
+
+let typesArray: Array<string> = []
+let wknArray: Array<string> = []
+
+
+Object.values(pokemon).forEach(val => {
+  val.types.map(t => typesArray.push(t))
+  val.weaknesses.map(w => wknArray.push(w))
+})
+
+typesArray = [...new Set(typesArray)]
+wknArray = [...new Set(wknArray)]
+
+const myFilters = {
+  types: typesArray.sort(),
+  weaknesses: wknArray.sort()
+}
+
+
 const typeDefs = gql`
   type Pokemon {
     id: ID!
@@ -36,9 +57,17 @@ const typeDefs = gql`
     candyCount: Int
   }
 
+  type MyFilters {
+    types: [String!]!
+    weaknesses: [String!]!
+  }
+  
+
   type Query {
     pokemonMany(skip: Int, limit: Int): [Pokemon!]!
     pokemonOne(id: ID!): Pokemon
+
+    populateFilters(query: String):MyFilters!
   }
 `
 
@@ -71,6 +100,11 @@ const resolvers: IResolvers<any, any> = {
     },
     pokemonOne(_, { id }: { id: string }): Pokemon {
       return (pokemon as Record<string, Pokemon>)[id]
+    },
+
+   
+    populateFilters(_,__,___): object {
+      return myFilters
     },
   },
 }
