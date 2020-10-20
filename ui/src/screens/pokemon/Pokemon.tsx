@@ -4,10 +4,12 @@ import { RouteComponentProps, Link } from '@reach/router'
 import { useQuery, gql } from '@apollo/client'
 import { Container as NesContainer } from 'nes-react'
 
+// INSTALLED FUSE.JS LIBRARY to implement FUZZY SEARCH
+// Fuse.js is a JavaScript library that provides fuzzy search capabilities for applications and websites. 
+// It's nice and easy to use out of the box, but also includes configuration options that allow you 
+// to tweak and create powerful solutions.
 import Fuse from 'fuse.js'
-import { TupleType } from 'typescript'
-import { type } from 'os'
-import { AnyMxRecord } from 'dns'
+
 
 const Container = styled(NesContainer)`
   && {
@@ -94,6 +96,10 @@ const Input = styled.input`
   margin-top:.3rem;
 `
 
+// Added populateFilters query to fetch dynamically created filter arrays
+// for types and weaknesses on API end
+// Added types and weaknesses fields to be fetched with pokemonMany query in order
+// to have access to run filtering
 const POKEMON_MANY = gql`
   query($skip: Int, $limit: Int) {
     pokemonMany(skip: $skip, limit: $limit) {
@@ -104,6 +110,7 @@ const POKEMON_MANY = gql`
       types
       weaknesses
     }
+    
     populateFilters {
       types
       weaknesses
@@ -120,12 +127,13 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
     | Array<{ id: string; name: string; img: string; num: string; types:string[]; weaknesses:string[]}>
     | undefined = data?.pokemonMany
 
+  //Declare pokemonFilters object array to be loaded from API query 
   const pokemonFilters: 
     | any 
     | undefined = data?.populateFilters
    
   
-
+  // Introducing React Hook useState to setup search input text && filter Arrays
   const [text, setText] = useState('');
   
   const [tArr, setTypesArr] = useState<Array<string>>([]);
@@ -139,14 +147,14 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
     return <p>Error!</p>
   }
 
+  // Declaring separated arrays (types and weaknesses) from pokemonFilters object array
   const pokemonTypes:Array<string> = pokemonFilters.types
   const pokemonWeaknesses:Array<string> = pokemonFilters.weaknesses
 
   
 
-  // FUZZY_SEARCH 
-
-  
+  // FUZZY_SEARCH algorithm
+ 
   const options = {
     includeScore:true,
     keys: ['name']
@@ -156,10 +164,10 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
     const fuse = new Fuse(pokemonList, options)
     const filteredPokemons = fuse.search(text).map(el => el.item)
     
-    
+    // Declare result array on condition the Search Box is not empty
     let result = text ? filteredPokemons : pokemonList
     
-    // FILTERING 
+    // FILTERING data based on a state of corresponding checkbox clicked 
     
     if (tArr.length > 0) {
       result = result.filter((res)=>{
@@ -182,6 +190,7 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
 
   return (
     <div>
+      {/* Rendering Search Box with callback function to manipulate box State onChange event */}
       <SearchBox>
           <h3>Search Box</h3>
           
@@ -194,6 +203,9 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
       ></Input>
          
       </SearchBox>
+
+      {/* Rendering filter checkbox lists for Types and Weaknesses with callback functions */}
+      {/* to manipulate states on condition a checkbox is checked or unchecked  */}
       <FilterTitles>
           <h3>Filter By:</h3>
           <span>
@@ -264,6 +276,10 @@ const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
             }
         </Filters>
       </FilterContainer>
+
+      {/* THE END OF MY CODE  */}
+
+
       <Container rounded>
         
         <List>

@@ -21,25 +21,32 @@ interface Pokemon {
 
 
 
-
+// Declare arrays to dynamically fill with types and weakness properties
+// of pokemon.json objects
 let typesArray: Array<string> = []
 let wknArray: Array<string> = []
 
-
+// Extracting types and weaknesses properties from pokemon.json objects by
+// using Object.values() javascript method which returns an array whose 
+// elements are the enumerable property values found on the object.
 Object.values(pokemon).forEach(val => {
   val.types.map(t => typesArray.push(t))
   val.weaknesses.map(w => wknArray.push(w))
 })
 
+// Filtering out typesArray && wknArray to have only unique values
 typesArray = [...new Set(typesArray)]
 wknArray = [...new Set(wknArray)]
 
+// Declare myFilters object with properties types && weakness assigning values to them  
+// with sorted arrays typesArray && wknArray respectively to be returned as a result 
+// in resolvers section when executing a query
 const myFilters = {
   types: typesArray.sort(),
   weaknesses: wknArray.sort()
 }
 
-
+// Declare type MyFilters and query populateFilters with type MyFilters in the Schema
 const typeDefs = gql`
   type Pokemon {
     id: ID!
@@ -102,7 +109,8 @@ const resolvers: IResolvers<any, any> = {
       return (pokemon as Record<string, Pokemon>)[id]
     },
 
-   
+    // Retrieving myFilters object with the technique for fetching the types 
+    // defined in the schema by declaring populateFilters Query resolver
     populateFilters(_,__,___): object {
       return myFilters
     },
